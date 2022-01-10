@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="container">
+      <h1>List of goals</h1>
+      <hr>
+      <ul>
+        <li *ngFor="let goal of goalsObjects;let i = index" appStrikethrough>
+          {{goal.id}}, {{goal.name}}, due on {{goal.completeDate|date|uppercase}}
+          <br>
+          <button (click)="toggleDetails(i)">Toggle Description</button>
+          <!--      {{goal.description}}-->
+          <!--      Bind goal to GoalDetailComponent
+                     $event - placeholder for the values that we expect to be emitted by the event.
+          -->
+          <app-goal-detail
+            [goal]='goal'
+            *ngIf="goal.showDescription"
+            (isComplete) = 'deleteGoal($event,i)'></app-goal-detail>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <app-goal-form (addGoal)="addNewGoal($event)"></app-goal-form>
+  </div>
+</div>
